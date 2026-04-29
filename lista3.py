@@ -1,0 +1,445 @@
+'''
+Lista de Exercícios referentes a estruturas de iteração (repetição)
+'''
+from util import inputint, inputfloat, gerar_palavra
+import random
+from typing import Final
+import matplotlib.pyplot as plt
+
+VERMELHO: Final = '\033[31m'
+VERDE: Final = '\033[32m'
+RESET: Final = '\033[m'
+
+def exemploPara(): # Quando se sabe a qtde de repetições
+    for c in range(10): #0-9 Baseado em intervalo (inicio e fim)
+        print(c)
+    for c in range(1,10): #1-9
+        print(c)
+    for c in range(1,10,2): #1,3,5,7,9
+        print(c)
+
+def exemploEnquanto(): # Quando não se sabe quantas iterações serão necessárias
+    opcao=-1
+    while opcao != 0: #baseado em uma condição (True|False)
+        opcao = inputint('Opção: ')
+
+#1.Faça um programa que imprima todos os números de 1 até 100.
+def q1():
+    for c in range(1,101):
+        print(c, end=' ')
+
+#2. Faça um programa que imprima todos os números pares de 100 até 1.
+def q2():
+    for c in range(100,1,-2):
+        print(c, end=' ')
+
+#3. Faça um programa que imprima os múltiplos de 5, no intervalo de 1 até 500.
+def q3():
+    for c in range(5,500,5):
+        print(c, end=' ')
+
+#4. Faça um programa que permita entrar com o nome, a idade e o sexo de 20
+#pessoas.O programa deve imprimir o nome da pessoa se ela for do sexo masculino
+#e tiver mais de 21 anos.
+def q4() -> None:
+    for _ in range(20):
+        nome: str = gerar_palavra()
+        idade: int = random.randrange(0,121)
+        sexo: str = random.choice(('M','F'))
+        if sexo == 'M' and idade >= 21:
+            print(f'A pessoa {nome:10} de sexo {sexo} tem {idade} anos.')
+
+#5. Sabendo-se que a unidade lógica e aritmética calcula o produto através de somas
+#sucessivas, crie um programa que calcule o produto de dois números inteiros
+#lidos. Suponha que os números lidos sejam positivos.
+def q5() -> None:
+    multiplicando: int = inputint('Multiplicando: ')
+    multiplicador: int = inputint('Multiplicador: ')
+    produto: int = 0
+    for _ in range(multiplicando):
+        produto += multiplicador
+    print(f'{multiplicando} * {multiplicador} = {produto}')
+
+#6. Crie um programa que imprima os 20 primeiros termos da série de Fibonacci.
+#Observação: os dois primeiros termos desta série são 1 e 1 e os demais são gerados
+#a partir da soma dos anteriores. Exemplo:
+#• 1 + 1 = 2, terceiro termo;
+#• 1 + 2 = 3, quarto termo, etc.
+# 1 1 2 3 5 8 13 21
+def q6() -> None:
+    anterior: int = 0
+    atual: int = 1
+    for _ in range(20):
+        print(atual, end=' ')
+        proximo = atual + anterior
+        anterior = atual
+        atual = proximo
+
+#7. Crie um programa que permita entrar com o nome, a nota da
+#prova 1 e da prova 2 de 15 alunos. Ao final, imprimir uma listagem, contendo:
+#nome, nota da prova 1, nota da prova 2, e média das notas de cada aluno. Ao final,
+#imprimir a média geral da turma.
+def q7() -> None:
+    QTDE_ALUNOS: Final = 15
+    diario = f'{'NOME':<11}{'N1':>5}{'N2':>5}{'MEDIA':^7}\n\n'
+    media_geral: float = 0.0
+    for _ in range(QTDE_ALUNOS):
+        nome: str = gerar_palavra()
+        prova1: float = round(random.random()*10,1)
+        prova2: float = round(random.random()*10,1)
+        media: float = round((prova1 + prova2)/2,1)
+        media_geral += media
+        diario += f'{nome:<11}{prova1:>5}{prova2:>5}{VERMELHO if media < 6 else VERDE}{media:>5}{RESET}\n'
+    print(diario)
+    print(f'\nMédia da Turma: {media_geral/QTDE_ALUNOS:.1f}')
+
+#8. Faça um programa que permita entrar com o nome e o salário bruto de 10 pessoas.
+#Após ler os dados, imprimir o nome e o valor da alíquota do imposto de renda
+#calculado conforme a tabela a seguir:
+#Salário IRPF
+#Salário menor que R$1300,00 Isento
+#Salário maior ou igual a R$1300,00 e menor que R$2300,00 10% do salário bruto
+#Salário maior ou igual a R$2300,00 15% do salário bruto
+
+#9. No dia da estreia do filme "Procurando Dory", uma grande emissora de TV realizou
+#uma pesquisa logo após o encerramento do filme. Cada espectador respondeu
+#a um questionário no qual constava sua idade e a sua opinião em relação ao filme:
+#excelente - 3; bom - 2; regular - 1. Criar um programa que receba a idade e a
+#opinião de 20 espectadores, calcule e imprima:
+#• A média das idades das pessoas que responderam excelente;
+#• A quantidade de pessoas que responderam regular;
+#• A percentagem de pessoas que responderam bom entre todos os expectadores
+#analisados.
+
+#10. Em um campeonato Europeu de Volleyball, se inscreveram 30 países. Sabendo-se
+#que na lista oficial de cada país consta, além de outros dados, peso e idade de 12
+#jogadores, crie um programa que apresente as seguintes informações:
+#
+#• O peso médio e a idade média de cada um dos times;
+#• O atleta mais pesado de cada time;
+#• O atleta mais jovem de cada time;
+#• O peso médio e a idade média de todos os participantes.
+
+#11. Construa um programa que leia vários números e informe quantos números
+#entre 100 e 200 foram digitados. Quando o valor 0 (zero) for lido, o algoritmo
+#deverá cessar sua execução.
+def q11() -> None:
+    numero: int = 1
+    cont_100_200: int = 0
+    qtde_numeros: int = 0
+    while numero != 0:
+        numero = random.randrange(0,200)
+        # print(numero)
+        cont_100_200 += 1 if 100<=numero<=200 else 0
+        qtde_numeros += 1
+    print(f'De {qtde_numeros} gerados, {cont_100_200} estão no intervalo entre 100 e 200!')
+
+#12. Dado um país A, com 5 milhões de habitantes e uma taxa de natalidade de 3% ao
+#ano, e um país B com 7 milhões de habitantes e uma taxa de natalidade de 2% ao
+#ano, fazer um programa que calcule e imprima o tempo necessário para que a
+#população do país A ultrapasse a população do país B.
+def q12() -> None:
+    xA = []
+    yA = []
+    xB = []
+    yB = []
+    paisA: int = 5_000_000
+    paisB: int = 7_000_000
+    ano: int = 0
+    while paisA < paisB:
+        xA.append(ano)
+        yA.append(paisA)
+        xB.append(ano)
+        yB.append(paisB)
+        ano+=1
+        paisA = paisA*1.03
+        paisB = paisB*1.02
+    print(f'Ao final de {ano} anos, a população do país A superou a de B')
+    print(f'População do país A = {int(paisA)}')
+    print(f'População do país B = {int(paisB)}')
+
+    # Criar o gráfico
+    plt.ticklabel_format(style='plain', axis='y') # 'plain' mostra o número cheio
+    plt.plot(xA, yA, marker='.', linestyle='-', color='b', label='País A')
+    plt.plot(xB, yB, marker='.', linestyle='-', color='r', label='País B')
+
+    # Adicionar títulos e rótulos
+    plt.title('Crescimento Populacional dos Países A e B')
+    plt.xlabel('Ano')
+    plt.ylabel('População')
+    plt.legend(loc='best')
+
+    # Exibir
+    plt.show()
+
+#12.1 Faça uma simulação de investimento para que se descubra quantos anos serão necessários
+# para que se alcance a marca de 1 milhão de reais a partir de um saldo inicial, 
+# um aporte mensal regular e uma taxa de retorno mensal constante.
+def q121() -> None:
+    x = []
+    y = []
+    meta: int = inputint('Meta de investimento: R$ ',min=1000)
+    saldo: float = inputfloat('Saldo inicial: R$ ', min=0)
+    aporte: float = inputfloat('Aporte mensal: R$ ', min=0)
+    taxa: float = inputfloat('Taxa de retorno mensal (%): ', min=0.1)
+    mes: int = 0
+    while saldo < meta:
+        mes += 1
+        saldo = saldo + aporte + saldo*taxa/100
+        x.append(mes)
+        y.append(saldo)
+    print(f'Tempo do investimento: {int(mes/12)} anos e {mes%12} meses.')
+
+    # Criar o gráfico
+    plt.ticklabel_format(style='plain', axis='y') # 'plain' mostra o número cheio
+    plt.plot(x, y, linestyle='-', color='b')
+
+    # Adicionar títulos e rótulos
+    plt.title('Histórico do Saldo do Investimento')
+    plt.xlabel('Mês')
+    plt.ylabel('Saldo')
+
+    # Exibir
+    plt.show()
+
+#13. Uma empresa de fornecimento de energia elétrica faz a leitura mensal dos medidores
+#de consumo. Para cada consumidor, são digitados os seguintes dados:
+#• número do consumidor
+#• quantidade de kWh consumidos durante o mês
+#• tipo (código) do consumidor
+#1-residencial, preço em reais por kWh = 0,3
+#2-comercial, preço em reais por kWh = 0,5
+#3-industrial, preço em reais por kWh = 0,7
+#Os dados devem ser lidos até que seja encontrado o consumidor com número 0
+#(zero). O programa deve calcular e imprimir:
+#• O custo total para cada consumidor
+#• O total de consumo para os três tipos de consumidor
+#• A média de consumo dos tipos 1 e 2
+def q13() -> None:
+    total_tipo1 = 0
+total_tipo2 = 0
+total_tipo3 = 0
+soma_12 = 0
+cont_12 = 0
+
+while True:
+    numero = int(input("Número do consumidor (0 para sair): "))
+    if numero == 0:
+        break
+    consumo = float(input("Consumo (kWh): "))
+    tipo = int(input("Tipo (1-residencial, 2-comercial, 3-industrial): "))
+    
+    if tipo == 1:
+        preco = 0.3
+        total_tipo1 += consumo
+    elif tipo == 2:
+        preco = 0.5
+        total_tipo2 += consumo
+    elif tipo == 3:
+        preco = 0.7
+        total_tipo3 += consumo
+    else:
+        print("Tipo inválido!")
+        continue
+    custo = consumo * preco
+    print(f"Custo do consumidor {numero}: R$ {custo:.2f}")
+    if tipo == 1 or tipo == 2:
+        soma_12 += consumo
+        cont_12 += 1
+
+print("\nTotal de consumo:")
+print(f"Residencial: {total_tipo1} kWh")
+print(f"Comercial: {total_tipo2} kWh")
+print(f"Industrial: {total_tipo3} kWh")
+if cont_12 > 0:
+    
+    media = soma_12 / cont_12
+    print(f"Média de consumo (tipos 1 e 2): {media:.2f} kWh")
+else:
+    print("Não há consumidores dos tipos 1 e 2.")
+
+#14. Faça um programa que leia vários números inteiros e apresente o fatorial de cada
+#número. O algoritmo encerra quando se digita um número menor do que 1.n
+
+#15. Faça um programa que permita entrar com a idade de várias pessoas e
+#imprima:
+#• total de pessoas com menos de 21 anos
+#• total de pessoas com mais de 50 anos
+
+#16. Sabendo-se que a unidade lógica e aritmética calcula a divisão por meio de subtrações
+#sucessivas, criar um algoritmo que calcule e imprima o resto da divisão de
+#números inteiros lidos. Para isso, basta subtrair o divisor ao dividendo, sucessivamente,
+#até que o resultado seja menor do que o divisor. O número de subtrações
+#realizadas corresponde ao quociente inteiro e o valor restante da subtração corresponde
+#ao resto. Suponha que os números lidos sejam positivos e que o dividendo
+#seja maior do que o divisor.
+#Exemplo:
+#  10 / 5
+#  10 é o Dividendo
+#  5 é o Divisor
+#  2 é o Quociente (resultado inteiro da divisão)
+#  0 é o Resto da Divisão
+
+#17. Crie um programa que possa ler um conjunto de pedidos de compra e
+#calcule o valor total da compra. Cada pedido é composto pelos seguintes campos:
+#• número de pedido
+#• data do pedido (dia, mês, ano)
+#• preço unitário
+#• quantidade
+#O programa deverá processar novos pedidos até que o usuário digite 0 (zero)
+#como número do pedido.
+ 
+#18. Uma pousada estipulou o preço para a diária em R$30,00 e mais uma taxa de
+#serviços diários de:
+#• R$15,00, se o número de dias for menor que 10;
+#• R$8,00, se o número de dias for maior ou igual a 10;
+#Faça um programa que imprima o nome, a conta e o número da conta de cada
+#cliente e ao final o total faturado pela pousada.
+#O programa deverá ler novos clientes até que o usuário digite 0 (zero) como
+#número da conta.
+
+#19. Em uma Universidade, os alunos das turmas de informática fizeram uma prova
+#de algoritmos. Cada turma possui um número de alunos. Criar um programa que
+#imprima:
+#• quantidade de alunos aprovados;
+#• média de cada turma;
+#• percentual de reprovados.
+#Obs.: Considere aprovado com nota >= 7.0
+
+#20. Uma pesquisa de opinião realizada no Rio de Janeiro, teve as seguintes perguntas:
+#• Qual o seu time de coração?
+#1-Fluminense;
+#2-Botafogo;
+#3-Vasco;
+#4-Flamengo;
+#5-Outros
+#• Onde você mora?
+#1-RJ;
+#2-Niterói;
+#3-Outros
+#• Qual o seu salário?
+#Faça um programa que imprima:
+#• o número de torcedores por clube;
+#• a média salarial dos torcedores do Botafogo;
+#• o número de pessoas moradoras do Rio de Janeiro, torcedores de outros
+#clubes;
+#• o número de pessoas de Niterói torcedoras do Fluminense
+#3.12. Exercícios da Aula 73
+#Obs.: O programa encerra quando se digita 0 para o time.
+
+#21. Em uma universidade cada aluno possui os seguintes dados:
+#• Renda pessoal;
+#• Renda familiar;
+#• Total gasto com alimentação;
+#• Total gasto com outras despesas;
+#Faça um programa que imprima a porcentagem dos alunos que gasta acima de
+#R$200,00 com outras despesas. O número de alunos com renda pessoal maior
+#que a renda familiar e a porcentagem gasta com alimentação e outras despesas
+#em relação às rendas pessoal e familiar.
+#Obs.: O programa encerra quando se digita 0 para a renda pessoal.
+
+#22. Crie um programa que ajude o DETRAN a saber o total de recursos que foram
+#arrecadados com a aplicação de multas de trânsito.
+#O algoritmo deve ler as seguintes informações para cada motorista:
+#• número da carteira de motorista (de 1 a 4327);
+#• número de multas;
+#• valor de cada uma das multas.
+#Deve ser impresso o valor da dívida para cada motorista e ao final da leitura o
+#total de recursos arrecadados (somatório de todas as multas). O programa deverá
+#imprimir também o número da carteira do motorista que obteve o maior número
+#de multas.
+#Obs.: O programa encerra ao ler a carteira de motorista de valor 0.
+
+#23. Crie um programa que leia um conjunto de informações (nome, sexo, idade, peso
+#e altura) dos atletas que participaram de uma olimpíada, e informar:
+#• a atleta do sexo feminino mais alta;
+#• o atleta do sexo masculino mais pesado;
+#• a média de idade dos atletas.
+#Obs.: Deverão se lidos dados dos atletas até que seja digitado o nome @ para um
+#atleta.
+#Para resolver este exercício, consulte a aula 7 que aborda o tratamento de strings,
+#como comparação e atribuição de textos.
+
+#24. Faça um programa que calcule quantos litros de gasolina são usados em uma
+#viagem, sabendo que um carro faz 10 km/litro. O usuário fornecerá a velocidade
+#do carro e o período de tempo que viaja nesta velocidade para cada trecho do
+#percurso. Então, usando as fórmulas distância = tempo x velocidade e litros
+#consumidos = distância / 10, o programa computará, para todos os valores não negativos
+#de velocidade, os litros de combustível consumidos. O programa deverá
+#imprimir a distância e o número de litros de combustível gastos naquele trecho.
+#Deverá imprimir também o total de litros gastos na viagem. O programa encerra
+#quando o usuário informar um valor negativo de velocidade.
+#74 Aula 3. Estruturas de Iteração
+
+#25. Faça um programa que calcule o imposto de renda de um grupo de contribuintes,
+#considerando que:
+#a) os dados de cada contribuinte (CIC, número de dependentes e renda bruta
+#anual) serão fornecidos pelo usuário via teclado;
+#b) para cada contribuinte será feito um abatimento de R$600 por dependente;
+#c) a renda líquida é obtida diminuindo-se o abatimento com os dependentes
+#da renda bruta anual;
+#d) para saber quanto o contribuinte deve pagar de imposto, utiliza-se a tabela
+#a seguir:
+#Renda Líquida Imposto
+#até R$1000 Isento
+#de R$1001 a R$5000 15%
+#acima de R$5000 25%
+#e) o valor de CIC igual a zero indica final de dados;
+#f ) o programa deverá imprimir, para cada contribuinte, o número do CIC e o
+#imposto a ser pago;
+#g) ao final o programa deverá imprimir o total do imposto arrecadado pela
+#Receita Federal e o número de contribuintes isentos;
+#h) leve em consideração o fato de o primeiro CIC informado poder ser zero.
+
+#26. Foi feita uma pesquisa de audiência de canal de TV em várias casas de uma
+#certa cidade, em um determinado dia. Para cada casa visitada foram fornecidos o
+#número do canal (4, 5, 7, 12) e o número de pessoas que estavam assistindo a ele
+#naquela casa. Se a televisão estivesse desligada, nada seria anotado, ou seja, esta
+#casa não entraria na pesquisa. Criar um programa que:
+#• Leia um número indeterminado de dados, isto é, o número do canal e o
+#número de pessoas que estavam assistindo;
+#• Calcule e imprima a porcentagem de audiência em cada canal.
+#Obs.: Para encerrar a entrada de dados, digite o número do canal zero.
+
+#27. Crie um programa que calcule e imprima o CR do período para os alunos de
+#computação. Para cada aluno, o algoritmo deverá ler:
+#• número da matrícula;
+#• quantidade de disciplinas cursadas;
+#• notas em cada disciplina;
+#Além do CR de cada aluno, o programa deve imprimir o melhor CR dos
+#alunos que cursaram 5 ou mais disciplinas.
+#• fim da entrada de dados é marcada por uma matrícula inválida (matrículas
+#válidas de 1 a 5000);
+#• CR do aluno é igual à média aritmética de suas notas.
+
+#28. Construa um programa que receba a idade, a altura e o peso de várias pessoas,
+#Calcule e imprima:
+#• a quantidade de pessoas com idade superior a 50 anos;
+#• a média das alturas das pessoas com idade entre 10 e 20 anos;
+#• a porcentagem de pessoas com peso inferior a 40 quilos entre todas as
+#pessoas analisadas.
+
+#29. Construa um programa que receba o valor e o código de várias mercadorias
+#vendidas em um determinado dia. Os códigos obedecem a lista a seguir:
+#L-limpeza
+#A-Alimentação
+#H-Higiene
+#Calcule e imprima:
+#• o total vendido naquele dia, com todos os códigos juntos;
+#• o total vendido naquele dia em cada um dos códigos.
+#Obs.: Para encerrar a entrada de dados, digite o valor da mercadoria zero.
+
+#30. Faça um programa que receba a idade e o estado civil (C-casado, S-solteiro, V-viúvo
+#e D-desquitado ou separado) de várias pessoas. Calcule e imprima:
+#• a quantidade de pessoas casadas;
+#• a quantidade de pessoas solteiras;
+#• a média das idades das pessoas viúvas;
+#• a porcentagem de pessoas desquitadas ou separadas dentre todas as pessoas
+#analisadas.
+#Obs.: Para encerrar a entrada de dados, digite um número menor que zero para a
+#idade.
+def q30() -> None:
+    raise NotImplementedError('q30() ainda não foi codificada')
+
+questao = int(input('Questão a ser executada: '))
+eval(f'q{questao}()')
